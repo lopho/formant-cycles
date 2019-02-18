@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UndoHistory>
+  <UndoTransaction tv-sec="1550429660" tv-usec="681043" name="Marker hinzufügen">
+    <MementoCommand obj-id="34" type-name="ARDOUR::Locations">
+      <Locations/>
+      <Locations>
+        <Location id="17305" name="mark1" start="0" end="0" flags="IsMark" locked="0" position-lock-style="AudioTime"/>
+      </Locations>
+    </MementoCommand>
+    <MementoCommand obj-id="42" type-name="SelectionMemento">
+      <SelectionMemento mouse-mode="MouseObject" zoom="832" left-frame="0" y-origin="0">
+        <Selection>
+          <StripableView id="11200"/>
+        </Selection>
+      </SelectionMemento>
+      <SelectionMemento mouse-mode="MouseObject" zoom="832" left-frame="0" y-origin="0">
+        <Selection>
+          <Marker id="17305" start="1"/>
+        </Selection>
+      </SelectionMemento>
+    </MementoCommand>
+  </UndoTransaction>
+</UndoHistory>

@@ -1,0 +1,93 @@
+import TidalHelper
+import FormantTable
+
+let accelerateTime = pF "accelerateTime"
+let freq = pF "freq"
+let oscMix = pF "oscMix"
+let vibratoSpeed = pF "vibratoSpeed"
+let vibratoDepth = pF "vibratoDepth"
+let atk = pF "atk"
+let sus = pF "sus"
+let rel = pF "rel"
+let lag = pF "lag"
+let dec = pF "dec"
+let a1 = pF "a1"
+let a2 = pF "a2"
+let a3 = pF "a3"
+let a4 = pF "a4"
+let a5 = pF "a5"
+let f1 = pF "f1"
+let f2 = pF "f2"
+let f3 = pF "f3"
+let f4 = pF "f4"
+let f5 = pF "f5"
+let q1 = pF "q1"
+let q2 = pF "q2"
+let q3 = pF "q3"
+let q4 = pF "q4"
+let q5 = pF "q5"
+
+let chordPattern p = p + n (cP "[]" "notes")
+
+let direct_dry = 0 -- 1 2
+let main_harmonic = 1 -- 3 4
+let rising_harmonic = 2 -- 5 6
+let formant_chan = 3 -- 7 8
+let bass = 4 -- 9 10
+let speech = 5 -- 11 12
+let arpegs = 6 -- 13 14
+let super_ambient = 7 -- 15 16
+let boring = 8 -- 17 18
+let kick = 10 -- 21 22
+let snare = 11 -- 23 24
+let hats = 12 -- 25 26
+let breaks = 13 -- 27 28
+let breaks_dry = 14 -- 29 30
+
+hush
+
+p breaks $ s "hh*8" # orbit breaks
+
+p 0 $ s "hh*8"
+
+llistToPat :: [[[a]]] -> [[Pattern a]]
+llistToPat ls = map (map listToPat) ls
+
+splitIt formant i x p = p
+  # f1 (i ( x ((formant!!0)!!0)))
+  # f2 (i ( x ((formant!!0)!!1)))
+  # f3 (i ( x ((formant!!0)!!2)))
+  # f4 (i ( x ((formant!!0)!!3)))
+  # f5 (i ( x ((formant!!0)!!4)))
+  # a1 (i ((formant!!1)!!0))
+  # a2 (i ((formant!!1)!!1))
+  # a3 (i ((formant!!1)!!2))
+  # a4 (i ((formant!!1)!!3))
+  # a5 (i ((formant!!1)!!4))
+  # q1 (i ((formant!!2)!!0))
+  # q2 (i ((formant!!2)!!1))
+  # q3 (i ((formant!!2)!!2))
+  # q4 (i ((formant!!2)!!3))
+  # q5 (i ((formant!!2)!!4))
+
+import Data.Maybe
+import Data.List
+
+markovStep :: [[Double]] -> [Int] -> [Int]
+markovStep tp xs = (fromJust $ findIndex (r <=) $ scanl1 (+) (tp!!(head xs))) : xs 
+    where r = timeToRand $ fromIntegral $ length xs
+markovPat n xi tp = slow (fromIntegral n) $ listToPat 
+    $ reverse $ (iterate (markovStep tp) [xi]) !! (n-1)
+:t markovPat
+
+hush
+
+:info patToList
+
+p main_harmonic
+ $ fast 4
+ $ n (fmap ([7,0,5,1]!!) $ markovPat 64 0 [[0.3, 0.4, 0.2, 0.1], [0.3, 0, 0.5, 0.2], [0.6, 0.3, 0, 0.1]])
+ # s "arpy"
+ # orbit main_harmonic
+
+:info fmap

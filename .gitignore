@@ -1,0 +1,3 @@
+*.bak
+modules/TidalHelper/dist/
+modules/FormantTable/dist/

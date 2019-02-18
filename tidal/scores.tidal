@@ -1,0 +1,75 @@
+let gatekeeper = "<\
+    \[~ ~ g'major ~] [~ ~ ~ ~] [~ ~ c'minor ~] [f'minor ~ ~ ~] \
+    \[~ ~ g'major ~] [c'minor ~ ~ ~] [~ ~ ~ ~] [f'minor ~ ~ ~] \
+    \[~ ~ g'major ~] [c'minor ~ ~ ~] [~ ~ e'major ~] [f'minor ~ ~ ~] \
+    \[~ ~ g'major ~] [c'minor ~ ~ ~] [c'major ~ e'minor ~] [f'minor ~ ~ ~] \
+    \[~ ~ g'major ~] [c'major ~ ~ ~] [~ ~ e'major ~] [f'minor ~ ~ ~] \
+    \[~ ~ g'major ~] [c'minor ~ ~ ~] [~ ~ ~ ~] [f'minor ~ ~ ~] \
+    \[~ ~ g'major ~] [c'minor ~ ~ ~] [~ ~ c'major ~] [f'minor ~ ~ ~] \
+    \[~ ~ g'major ~] [c'minor ~ ~ ~] [~ ~ ~ ~] [f'minor ~ ~ ~] \
+    \[~ ~ g'major ~] [c'major ~ ~ ~] [~ ~ ~ ~] [f'minor ~ ~ ~] \
+    \[~ ~ g'major ~] [c'minor ~ ~ ~] [~ ~ ~ ~] [f'minor ~ ~ ~] \
+    \[~ ~ g'major ~] [c'minor ~ ~ ~] [~ ~ ~ ~] [f'minor ~ ~ ~] \
+    \[~ ~ g'major ~] [c'minor ~ ~ ~] [~ ~ c'major ~] [f'minor ~ ~ ~] \
+    \[~ ~ g'major ~] [c'major ~ ~ ~] [c'minor ~ ~ ~] [f'minor ~ ~ ~] \
+    \[~ ~ g'major ~] [c'minor ~ ~ ~] [~ ~ ~ ~] [f'minor ~ ~ ~] \
+    \[~ ~ g'major ~] [c'minor ~ ~ ~] [~ ~ ~ ~] [f'minor ~ ~ ~] \
+    \>"
+
+let gatekeeper_ext = "<\
+    \g'major g'major c'minor f'minor \
+    \g'major c'minor c'minor f'minor \
+    \g'major c'minor e'major f'minor \
+    \g'major c'minor [c'major e'minor] f'minor \
+    \g'major c'major e'major f'minor \
+    \g'major c'minor c'minor f'minor \
+    \g'major c'minor c'major f'minor \
+    \g'major c'minor c'minor f'minor \
+    \g'major c'major c'major f'minor \
+    \g'major c'minor c'minor f'minor \
+    \g'major c'minor c'minor f'minor \
+    \g'major c'minor c'major f'minor \
+    \g'major c'major c'minor f'minor \
+    \g'major c'minor c'minor f'minor \
+    \g'major c'minor c'minor f'minor \
+    \>"
+
+let gatekeeper_ext_harmo = "<\
+    \g g c f \
+    \g c c f \
+    \g c e f \
+    \g c [c e] f \
+    \g c e f \
+    \g c c f \
+    \g c c f \
+    \g c c f \
+    \g c c f \
+    \g c c f \
+    \g c c f \
+    \g c c f \
+    \g c c f \
+    \g c c f \
+    \g c c f \
+    \>"
+
+let gatekeeper_harmo = "<g'major c'minor c'minor f'minor>"
+let gatekeeper_base = "<g c c f>"
+let gatekeeper_accel = "<[f g g g] [g c c c] [c c c c] [c f f f]>"
+
+let avril = "<\
+    \[f'minor ~ ~ ~] [~ af'major ~ ~] [df'major ~ ~ ~] [b'minor ~ ~ ~] \
+    \[f'minor ~ ~ ~] [af'major ~ ~ ~] [df'major ~ ~ ~] [b'minor ~ ~ ~] \
+    \[f'minor ~ ~ ~] [~ ~ ~ ~] [df'major ~ ~ ~] [b'minor ~ ~ ~] \
+    \[f'minor ~ ~ ~] [~ ~ af'major ~] [df'major ~ ~ ~] [b'minor ~ ~ ~] \
+    \[af'major ~ ~ ~] [ef'major ~ ~ ~] [af'major ~ ~ ~] [df'major ~ ~ ~] \
+    \[af'major ~ ~ ~] [~ ~ ~ ~] [~ ~ ~ ~] [df'major ~ ~ ~] \
+    \[af'major ~ ~ ~] [ef'major ~ ~ ~] [af'major ~ ~ ~] [df'major ~ ~ ~] \
+    \[ef'major ~ ~ ~] [af'major ~ b'major ~] [~ ~ ~ ~] [af'major ~ b'major ~] \
+    \[~ ~ af'major ~] [~ ~ ef'major ~] [b'major ~ af'major ~] [~ ~ ~ ~] \
+    \[f'minor ~ ~ ~] [~ ~ ~ ~] [df'major ~ ~ ~] [b'minor ~ ~ ~] \
+    \[af'minor ~ f'minor ~] [af'major ~ ~ ~] [df'major ~ ~ ~] [b'minor ~ ~ ~] \
+    \[f'minor ~ ~ ~] [~ ~ ~ ~] [df'major ~ ~ ~] [b'minor ~ ~ ~] \
+    \[f'minor ~ ~ ~] [~ ~ ~ ~] [df'major ~ ~ ~] [b'minor ~ ~ ~] \
+    \[df'major ~ ~ b'minor] [~ ~ af'major ~] [df'major ~ ~ ~] [ef'major ~ af'major ~] \
+    \[df'major7 ~ ~ ~] [af'major ~ ~ ~] [b'minor ~ df'major ~] [f'minor ~ ~ ~] \
+    \>"

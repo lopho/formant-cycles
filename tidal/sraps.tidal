@@ -1,0 +1,58 @@
+------------------------------------------------------------------------------
+-- rising harmonic
+-- xfadeIn 2 32
+let rising_harmonic = 2
+
+xfadeIn rising_harmonic 8 $ jux (stut' 4 0.1 (|* gain 1.2)) $ s "supersaw(3,8)"
+  # n (gatekeeper_harmo)
+  # hpf 150
+  # gain 0.35
+  # pan (rand)
+  # orbit rising_harmonic
+
+xfadeIn rising_harmonic 16 $ silence -- rising harmonic
+p rising_harmonic $ silence
+
+------------------------------------------------------------------------------
+-- speech synth rhythm
+let speech = 5
+
+p speech $ stut' 8 (1/14) (|* ((gain 0.7) |*| (up 1.1))) $ s "speakspell(8?,8)"
+  # up gatekeeper_harmo
+  # gain 0.88
+  # orbit 5
+
+xfadeIn speech 16 $ silence
+p speech $ silence
+
+------------------------------------------------------------------------------
+-- 808 bass distorted
+let bass = 4
+
+p bass $ s "808bd:24(3?,8)"
+  # up "<g c c f>"
+  # shape 0.9
+  # gain 0.7
+  # cut "4"
+  # crush 8
+  # orbit bass
+
+xfadeIn bass 16 $ silence -- bass distorted
+p bass $ silence
+
+------------------------------------------------------------------------------
+-- arpeggios
+-- xfadeIn 6 16
+let arpegs = 6
+
+p arpegs $ every 4 (0.25 <~) $ arp "[converge, down]"
+  $ n (gatekeeper + 12) # s "supersquare"
+  # gain 0.9
+  # f1 (slow 8 (smooth "1000 320"))
+  # f2 (slow 8 (smooth "800 3200"))
+  # hpf 500
+  # legato 0.3
+  # orbit main_harmonic
+
+xfadeIn arpegs 16 $ silence
+p arpegs $ silence

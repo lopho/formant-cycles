@@ -1,0 +1,215 @@
+
+hush
+
+---- midi & clock
+setcps 0.5 --
+p "midiclock" $ midicmd "midiClock*48" # s "midi"
+p "midiclock" $ silence
+once $ midicmd "stop" # s "midi"
+p "midictl" $ midicmd "start" # s "midi"
+p "midictl" $ silence
+p "midi1" $ n gatekeeper_base # s "midi"
+p "midi1" $ silence
+
+
+------------------------------------------------------------------------------
+-- FORMANT
+-- Bass Tenor
+let fo1 = FormantTable.getF Tenor A formantTable -- 0 0
+let fo2 = FormantTable.getF Tenor E formantTable -- 1 0
+let fo3 = FormantTable.getF Tenor O formantTable -- 0 1
+let fo4 = FormantTable.getF Tenor I formantTable -- 1 1
+let form = llistToPat $ argProgression [0, 1, 0.5, 0.75, 0] [1, 0.75, 0.5, 0.25, 0] fo1 fo2 fo3 fo4
+:t (|+100)
+
+-- xfadeIn 0 32
+p formant_chan
+  $ every 6 (jux (rev))
+  $ splitIt form (slow 4) (|+ ((cF 0 "2") * 1000 ))
+  $ (chordPattern (s "formantVoice*4"))
+  |+| n (gatekeeper_ext_harmo - 12)
+  -- # legato 1.2
+  -- # gain (slow 16 (smooth "1.2 0.8 0.65 0.8 1.2"))
+  -- # shape (slow 16 (smooth "0 0.9 0.95 0.9 0"))
+  # accelerate gatekeeper_accel
+  # accelerateTime 0.1
+  # vibratoSpeed 8
+  # vibratoDepth 6 --((cF 0 "1") * 10.0)
+  # lag 0
+  # gain 1
+  -- |+| gain (0)
+  -- # atk "0.2"
+  -- # dec "1"
+  -- # sus "1"
+  -- # rel "0.1"
+  -- # pan rand
+  # hpf 200 
+  -- # lpf (((cF 0 "1") * 12000) + 200)
+  -- |*| n (cF 0 "3")
+  # orbit formant_chan
+
+p formant_chan $ silence
+xfadeIn formant_chan 16 $ silence
+
+------------------------------------------------------------------------------
+-- main harmonic
+-- xfadeIn 1 32
+let main_harmonic = 1
+
+xfadeIn main_harmonic 8 $ s "supersquare*2"
+  # n (gatekeeper - 12)
+  # hpf 150
+  # gain 0.7
+  # orbit main_harmonic
+
+xfadeIn main_harmonic 16 $ silence -- main harmonic
+p main_harmonic $ silence
+
+xfadeIn rising_harmonic 8 $ jux (stut' 4 0.1 (|* gain 1.2)) $ s "supersaw(3,8)"
+  # n (gatekeeper_harmo)
+  # hpf 150
+  # gain 0.35
+  # pan (rand)
+  # orbit rising_harmonic
+
+xfadeIn rising_harmonic 16 $ silence -- rising harmonic
+p rising_harmonic $ silence
+
+
+------------------------------------------------------------------------------
+-- super ambient intro outro harmonics
+let super_ambient = 7
+
+xfadeIn super_ambient 32 $ stack [s "808" , s "superpiano", s "<~ ~ ~ ~>" ]
+  # up gatekeeper_ext
+  # gain 0.6
+  # pan rand
+  # orbit super_ambient
+
+p super_ambient $ s "808" -- cowbell only
+  # up (gatekeeper_ext - 1)
+  # gain 0.8
+  # pan rand
+  # orbit super_ambient
+
+hush
+xfadeIn super_ambient 16 $ silence
+p super_ambient $ silence
+
+------------------------------------------------------------------------------
+-- heavy rhythm kick
+let kick = 10
+
+p kick $ stack [s "808bd:1(3,8)", s "bd:1" + gain 0.5]
+  -- + n (gatekeeper_harmo)
+  # gain 0.9
+  # orbit kick
+
+xfadeIn kick 16 $ silence
+p kick $ silence
+
+-- heavy rhythm snare
+let snare = 11
+
+p snare $ slow 2
+  $ stack [s "808sd:2(1,16,2)", s "808sd:2(1,16,2)" # speed 0.5, s "cp(1,16,2)" ]
+  # gain 1
+  # orbit snare
+
+xfadeIn snare 16 $ silence
+p snare $ silence
+
+-- ambient trap-hats
+let hats = 12
+
+xfadeIn hats 16 $ fast 1 $ s "808cy*4"
+  |+| n "<[2 2 2 2] [2 2 2*3 2] [2 2*3 2 2] [2 2 4*8 4*3]>"
+  # release 0.1
+  # gain 0.9
+  # orbit hats
+
+xfadeIn hats 16 $ silence
+p hats $ silence
+
+------------------------------------------------------------------------------
+-- breaks
+-- xfadeIn 13 16
+let breaks = 13
+
+p breaks $ silence
+p breaks_dry $ silence
+
+xfadeIn breaks 8 $ slow 4 $ s "amencutup*32" # n "0 .. 31"
+  # pan (rand)
+  # cut "13"
+  # gain 1.7
+  # attack 0.01
+  # release 0.99
+  # orbit breaks
+
+p breaks $ slow 4 $ jux (rev . (# speed 1.1)) $ striate 1 $ s "amencutup*32"
+  |+| n (irand 32)
+  # pan (rand)
+  # cut "13"
+  # gain 1.7
+  # attack 0.01
+  # release 0.9
+  # orbit breaks
+
+xfadeIn 16 16 $ silence
+p breaks $ silence
+
+-- break double-time
+-- xfadeIn 13 4
+p (breaks+1) $ slow 8 $ jux (# speed 1.1) $ jux (rev) $ striate 2 $ s "amencutup*32"
+  |+| n (irand 32)
+  # pan (rand)
+  # gain 1.3
+  # attack 0.008
+  # release 0.9
+  # orbit breaks
+
+xfadeIn breaks 16 $ silence
+p (breaks+1) $ silence
+
+-- break straight up
+let breaks_dry = 14
+
+p breaks $ stack [s "amencutup*16" |+| n (irand 32)]
+  # pan rand
+  # attack 0.008
+  # release 0.9
+  # gain 0.8
+  # orbit breaks
+
+xfadeIn breaks 8 $ slowcat [s "amencutup*8" |+| n (irand 16) # gain 1.5 # orbit breaks,
+  s "amencutup(8,16)" |+| n ((irand 8) + 16)  # gain 1.5 # orbit breaks,
+  s "amencutup*16" |+| n ((irand 8) + 16) # up "0 .. 2" # gain 1.5 # orbit breaks,
+  s "amencutup(6,8)" |+| n ((irand 8) + 24) # gain 1.5 # orbit breaks_dry ]
+  # cut "14"
+  # pan rand
+  # attack 0.008
+  # release 0.9
+  |+| gain 0.5
+
+xfadeIn breaks 32 $ silence
+p breaks $ silence
+
+------------------------------------------------------------------------------
+-- boring harmonic
+let boring = 8
+
+xfadeIn boring 8 $ s "superpiano(4,32,4)"
+  # n gatekeeper_ext
+  # gain 0.8
+  # orbit rising_harmonic
+
+xfadeIn boring 16 $ silence
+p boring $ silence
+
+------------------------------------------------------------------------------
+
+
+hush
+
+
