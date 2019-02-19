@@ -1,5 +1,9 @@
 # Formant Synthesis with TidalCycles and SuperCollider
 
+Make sure to first run the SuperCollider code (supercollider/sc.scd) before opening the Ardour project (ardour/gatekeeper_final).
+This way, ardour automatically routes the correct SuperCollider output channels to the mixer.
+
+
 used tools:
 * TidalCycles 1.0.7 (https://tidalcycles.org/)
     * composition
